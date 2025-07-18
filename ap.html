@@ -1,0 +1,43 @@
+   <!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Acompanhamento Jurídico</title>
+  <style>
+    body { font-family: Arial; padding: 20px; }
+    .box { border: 1px solid #ccc; padding: 20px; border-radius: 10px; max-width: 600px; margin: auto; }
+    .linha { margin: 10px 0; }
+    .label { font-weight: bold; }
+  </style>
+</head>
+<body>
+  <h2>Acompanhamento de Atendimento</h2>
+  <div class="box">
+    <div class="linha"><span class="label">Cliente:</span> <span id="cliente"></span></div>
+    <div class="linha"><span class="label">Reclamada:</span> <span id="reclamada"></span></div>
+    <div class="linha"><span class="label">Etapa:</span> <span id="etapa"></span></div>
+    <div class="linha"><span class="label">Última Atualização:</span> <span id="atualizacao"></span></div>
+    <div class="linha"><span class="label">Observações:</span> <span id="obs"></span></div>
+  </div>
+
+  <script>
+    const clienteBusca = "João da Silva";
+
+    fetch("https://sheetdb.io/api/v1/c3mt9imh9arig")
+      .then(res => res.json())
+      .then(data => {
+        const item = data.find(row => row.Cliente === clienteBusca);
+        if (item) {
+          document.getElementById("cliente").textContent = item.Cliente;
+          document.getElementById("reclamada").textContent = item.Reclamada;
+          document.getElementById("etapa").textContent = item.Etapa_Atual;
+          document.getElementById("atualizacao").textContent = item.Ultima_Atualizacao;
+          document.getElementById("obs").textContent = item.Observacoes;
+        } else {
+          document.querySelector(".box").innerHTML = "<p>Cliente não encontrado.</p>";
+        }
+      });
+  </script>
+</body>
+</html>
+
